@@ -8,7 +8,6 @@
 #include <limits> // std::numeric_limits
 #include <cmath> // std::fmod
 #include <algorithm> // std::minmax
-#include <fmt/core.h> // fmt::format
 
 #include <SFML/Graphics/Color.hpp> // sf::Color
 
@@ -118,19 +117,6 @@ class Color : public sf::Color
 
         // Retrieve minimum and maximum intensity of channels
         const auto [rgbmin, rgbmax] = std::minmax({in.r, in.g, in.b});
-
-                                std::uint8_t rmin, rmax;
-                                if( in.r < in.g )
-                                   {
-                                    if( in.g < in.b ) { rmin = in.r;  rmax = in.b; }
-                                    else              { rmax = in.g;  rmin = in.r<in.b ? in.r : in.b; }
-                                   }
-                                else
-                                   {
-                                    if( in.r < in.b ) { rmin = in.g;  rmax = in.b; }
-                                    else              { rmax = in.r;  rmin = in.g<in.b ? in.g : in.b; }
-                                   }
-                                if(rmin!=rgbmin || rmax!=rgbmax) fmt::print("minmax error: {}/{} not {}/{}\n",rgbmin,rgbmax,rmin,rmax);
 
         // [luminance]
         const float maxsum = 2.0f * static_cast<float>(channel_max);
