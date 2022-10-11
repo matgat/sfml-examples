@@ -88,7 +88,7 @@ class Color : public sf::Color
     [[maybe_unused]] constexpr Color& redder(const std::uint8_t d) noexcept
        {
         std::uint8_t r_incr = rgb_t::incr(r, d/2);
-        const std::uint8_t decr = d - (r_incr - r); // Ensure a difference d
+        const std::uint8_t decr = rgb_t::decr(d, rgb_t::decr(r_incr, r)); // Ensure a difference d
         const std::uint8_t g_decr = rgb_t::decr(g, decr);
         const std::uint8_t b_decr = rgb_t::decr(b, decr);
         // Ensure the difference:
@@ -101,7 +101,7 @@ class Color : public sf::Color
     [[maybe_unused]] constexpr Color& greener(const std::uint8_t d) noexcept
        {
         std::uint8_t g_incr = rgb_t::incr(g, d/2);
-        const std::uint8_t decr = d - (g_incr - g); // Ensure a difference d
+        const std::uint8_t decr = rgb_t::decr(d, rgb_t::decr(g_incr,g)); // Ensure a difference d
         const std::uint8_t r_decr = rgb_t::decr(r, decr);
         const std::uint8_t b_decr = rgb_t::decr(b, decr);
         // Ensure the difference:
@@ -114,7 +114,7 @@ class Color : public sf::Color
     [[maybe_unused]] constexpr Color& bluer(const std::uint8_t d) noexcept
        {
         std::uint8_t b_incr = rgb_t::incr(b, d/2);
-        const std::uint8_t decr = d - (b_incr - b); // Ensure a difference d
+        const std::uint8_t decr = rgb_t::decr(d, rgb_t::decr(b_incr,b)); // Ensure a difference d
         const std::uint8_t r_decr = rgb_t::decr(r, decr);
         const std::uint8_t g_decr = rgb_t::decr(g, decr);
         // Ensure the difference:
@@ -127,12 +127,12 @@ class Color : public sf::Color
     [[maybe_unused]] constexpr Color& yellower(const std::uint8_t d) noexcept
        {
         std::uint8_t b_decr = rgb_t::decr(b, d/2);
-        const std::uint8_t incr = d - (b - b_decr); // Ensure a difference d
+        const std::uint8_t incr = rgb_t::decr(d, rgb_t::decr(b,b_decr)); // Ensure a difference d
         const std::uint8_t r_incr = rgb_t::incr(r, incr);
         const std::uint8_t g_incr = rgb_t::incr(g, incr);
         // Ensure the difference:
-             if(r_incr==rgb_t::max) b_decr = rgb_t::decr(b, d - (r_incr - r));
-        else if(g_incr==rgb_t::max) b_decr = rgb_t::decr(b, d - (g_incr - g));
+             if(r_incr==rgb_t::max) b_decr = rgb_t::decr(b, rgb_t::decr(d,rgb_t::decr(r_incr,r)));
+        else if(g_incr==rgb_t::max) b_decr = rgb_t::decr(b, rgb_t::decr(d,rgb_t::decr(g_incr,g)));
         return set_rgb(r_incr, g_incr, b_decr);
        }
 
@@ -140,12 +140,12 @@ class Color : public sf::Color
     [[maybe_unused]] constexpr Color& purpler(const std::uint8_t d) noexcept
        {
         std::uint8_t g_decr = rgb_t::decr(g, d/2);
-        const std::uint8_t incr = d - (g - g_decr); // Ensure a difference d
+        const std::uint8_t incr = rgb_t::decr(d, rgb_t::decr(g,g_decr)); // Ensure a difference d
         const std::uint8_t r_incr = rgb_t::incr(r, incr);
         const std::uint8_t b_incr = rgb_t::incr(b, incr);
         // Ensure the difference:
-             if(r_incr==rgb_t::max) g_decr = rgb_t::decr(g, d - (r_incr - r));
-        else if(b_incr==rgb_t::max) g_decr = rgb_t::decr(g, d - (b_incr - b));
+             if(r_incr==rgb_t::max) g_decr = rgb_t::decr(g, rgb_t::decr(d,rgb_t::decr(r_incr,r)));
+        else if(b_incr==rgb_t::max) g_decr = rgb_t::decr(g, rgb_t::decr(d,rgb_t::decr(b_incr,b)));
         return set_rgb(r_incr, g_decr, b_incr);
        }
 
@@ -153,12 +153,12 @@ class Color : public sf::Color
     [[maybe_unused]] constexpr Color& cyaner(const std::uint8_t d) noexcept
        {
         std::uint8_t r_decr = rgb_t::decr(r, d/2);
-        const std::uint8_t incr = d - (r - r_decr); // Ensure a difference d
+        const std::uint8_t incr = rgb_t::decr(d, rgb_t::decr(r,r_decr)); // Ensure a difference d
         const std::uint8_t g_incr = rgb_t::incr(g, incr);
         const std::uint8_t b_incr = rgb_t::incr(b, incr);
         // Ensure the difference:
-             if(g_incr==rgb_t::max) r_decr = rgb_t::decr(r, d - (g_incr - g));
-        else if(b_incr==rgb_t::max) r_decr = rgb_t::decr(r, d - (b_incr - b));
+             if(g_incr==rgb_t::max) r_decr = rgb_t::decr(r, rgb_t::decr(d,rgb_t::decr(g_incr,g)));
+        else if(b_incr==rgb_t::max) r_decr = rgb_t::decr(r, rgb_t::decr(d,rgb_t::decr(b_incr,b)));
         return set_rgb(r_decr, g_incr, b_incr);
        }
 

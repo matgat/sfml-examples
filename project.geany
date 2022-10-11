@@ -65,5 +65,6 @@ auto-format-trigger-chars=})];
 format-on-save=false
 
 [files]
-current_page=0
-FILE_NAME_0=515;C++;0;EUTF-8;0;1;0;%2Fhome%2Fmat%2Fdev%2Fsfml-examples%2Fcolor%2Fmain.cpp;0;4
+current_page=1
+FILE_NAME_0=678;C++;0;EUTF-8;0;1;0;%2Fhome%2Fmat%2Fdev%2Fsfml-examples%2Fcolor%2Fmain.cpp;0;4
+FILE_NAME_1=7578;C++;0;EUTF-8;0;1;0;%2Fhome%2Fmat%2Fdev%2Fsfml-examples%2Fcolor%2Fsfml-addons-color.hpp;0;4
