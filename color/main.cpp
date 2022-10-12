@@ -1,70 +1,101 @@
-#include <array>
+#include <vector>
 #include <SFML/Graphics.hpp>
 #include "sfml-addons-color.hpp" // sfadd::Color
 
-auto generate_shapes_array()
+
+//////////////////////////////////////////////////////////////////////////////
+// A facility to generate some shapes
+class ShapeArrays
 {
-    const float half_dim = 50.0f;
-    static float y = 0.0f;
-    std::array<sf::CircleShape,10> shapes;
-    shapes.fill( sf::CircleShape(half_dim) );
-    for(float d=0.0f; auto& shape : shapes)
+ private:
+    std::vector<std::vector<sf::CircleShape>> m_shapes;
+
+    static auto generate_shape_array(const std::size_t n)
        {
-        shape.move({d, y});
-        d += 1.5f * shape.getRadius();
+        std::vector<sf::CircleShape> shapes;
+        shapes.reserve(n);
+        const float half_dim = 50.0f;
+        const float dx = 1.5f * half_dim;
+        static float y = 0.0f;
+        for( std::size_t i=0; i<n; ++i )
+           {
+            auto& shape = shapes.emplace_back(half_dim);
+            shape.move({static_cast<float>(i)*dx, y});
+           }
+        y += 2.1f * half_dim;
+        return shapes;
        }
-    y += 2.1f * half_dim;
-    return shapes;
-}
+
+ public:
+    auto& add_shape_array(const std::size_t n)
+       {
+        m_shapes.push_back(generate_shape_array(n));
+        return m_shapes.back();
+       }
+
+    [[nodiscard]] auto begin() const noexcept { return m_shapes.cbegin(); }
+    [[nodiscard]] auto end() const noexcept { return m_shapes.cend(); }
+};
+
 
 //----------------------------------------------------------------------
 int main()
 {
+    const std::size_t n = 10; // How many shapes per row
+    ShapeArrays all_shapes;
+
+
+    // Let's have some fun with colors
+
     // Changing color hue
-    auto hue_shapes = generate_shapes_array();
     sfadd::Color col{217,54,82,200}; // Let's start with a pretty red
-    for(const float d=360.0f/(hue_shapes.size()+1.0f); auto& shape : hue_shapes)
+    for(const float delta=360.0f/(static_cast<float>(n)+1.0f);
+        auto& shape : all_shapes.add_shape_array(n))
        {
         shape.setFillColor(col);
-        col.hue_incr(d);
+        col.hue_incr(delta); // <== Here the magic
        }
 
     // Changing color saturation
-    auto desat_shapes = generate_shapes_array();
     col = {255,0,255,200}; // Start with an eyesore
-    for(const float d=-1.0f/desat_shapes.size(); auto& shape : desat_shapes)
+    for(const float delta=-1.0f/static_cast<float>(n);
+        auto& shape : all_shapes.add_shape_array(n))
        {
         shape.setFillColor(col);
-        col.sat_incr(d);
+        col.sat_incr(delta); // <== Here the magic
        }
 
     // Changing color luminance
-    auto lum_shapes = generate_shapes_array();
     col = {0,0,50,200}; // Start with a very dark blue
-    for(const float d=1.0f/lum_shapes.size(); auto& shape : lum_shapes)
+    for(const float delta=1.0f/static_cast<float>(n);
+        auto& shape : all_shapes.add_shape_array(n))
        {
         shape.setFillColor(col);
-        col.lum_incr(d);
+        col.lum_incr(delta); // <== Here the magic
        }
 
-    // Changing color channel
-    auto redder_shapes = generate_shapes_array();
+    // Changing color channels
+    const std::uint8_t delta_rgb = 255/(n-4);
     col = {61,188,55,200}; // Start with a green
-    for(const std::uint8_t d=255/(redder_shapes.size()-2); auto& shape : redder_shapes)
+    for(auto& shape : all_shapes.add_shape_array(n))
        {
         shape.setFillColor(col);
-        col.redder(d);
+        col.redder(delta_rgb); // <== Here the magic
        }
-
-    // Changing color channel
-    auto cyaner_shapes = generate_shapes_array();
-    for(const std::uint8_t d=255/(cyaner_shapes.size()-2); auto& shape : cyaner_shapes)
+    for(auto& shape : all_shapes.add_shape_array(n))
        {
         shape.setFillColor(col);
-        col.cyaner(d);
+        col.bluer(delta_rgb); // <== Here the magic
+       }
+    for(auto& shape : all_shapes.add_shape_array(n))
+       {
+        shape.setFillColor(col);
+        col.greener(delta_rgb); // <== Here the magic
        }
 
-    std::array all_shapes = { hue_shapes, desat_shapes, lum_shapes, redder_shapes, cyaner_shapes };
+
+
+    // Draw shapes
     sf::RenderWindow window(sf::VideoMode(800, 800), "colors");
     while( window.isOpen() )
        {
