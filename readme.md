@@ -25,9 +25,11 @@ $ clang++ -std=c++2b -O3 -Wall -Wextra -Wpedantic -Wconversion -Wfatal-errors -l
 ```
 On windows, using Visual Studio, the `sfml` library
 dependency can be conveniently handled with `vcpkg`:
+
 ```
 > git clone https://github.com/Microsoft/vcpkg.git
 > .\vcpkg\bootstrap-vcpkg.bat -disableMetrics
 > .\vcpkg\vcpkg integrate install
 > .\vcpkg\vcpkg install fmt:x64-windows
+> .\vcpkg\vcpkg install sfml:x64-windows
 ```

@@ -28,7 +28,7 @@ long_line_behaviour=1
 long_line_column=72
 
 [VTE]
-last_dir=/home/mat/dev/sfml-examples
+last_dir=/home/mat/dev/sfml-examples/color
 
 [build-menu]
 EX_00_LB=Run
@@ -41,7 +41,7 @@ C++FT_00_LB=_Compile
 C++FT_00_CM=clang++ -std=c++2b -Wall -Wextra -Wpedantic -Wconversion -Wfatal-errors -fsyntax-only -c "%f"
 C++FT_00_WD=
 C++FT_01_LB=_Build
-C++FT_01_CM=g++ -std=c++2b -O3 -Wall -Wextra -Wpedantic -Wconversion -Wfatal-errors -lsfml-graphics -lsfml-window -lsfml-system "%f" -o "%d/%e"
+C++FT_01_CM=g++ -ggdb -std=c++2b -Wall -Wextra -Wpedantic -Wconversion -Wfatal-errors -lsfml-graphics -lsfml-window -lsfml-system "%f" -o "%d/%e"
 C++FT_01_WD=
 C++FT_02_LB=_Lint
 C++FT_02_CM=cppcheck --language=c++ --enable=warning,style --suppress=passedByValue --template=gcc "%f"
@@ -66,5 +66,5 @@ format-on-save=false
 
 [files]
 current_page=0
-FILE_NAME_0=1804;C++;0;EUTF-8;0;1;0;%2Fhome%2Fmat%2Fdev%2Fsfml-examples%2Fcolor%2Fmain.cpp;0;4
+FILE_NAME_0=1587;C++;0;EUTF-8;0;1;0;%2Fhome%2Fmat%2Fdev%2Fsfml-examples%2Fcolor%2Fmain.cpp;0;4
 FILE_NAME_1=387;C++;0;EUTF-8;0;1;0;%2Fhome%2Fmat%2Fdev%2Fsfml-examples%2Fpan-zoom-resize%2Fmain.cpp;0;4
