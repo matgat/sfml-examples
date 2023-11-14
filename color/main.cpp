@@ -10,7 +10,7 @@ class ShapeArrays
  private:
     std::vector<std::vector<sf::CircleShape>> m_shapes;
 
-    static auto generate_shape_array(const std::size_t n)
+    static auto generate_overlapped_circles(const std::size_t n)
        {
         std::vector<sf::CircleShape> shapes;
         shapes.reserve(n);
@@ -29,7 +29,7 @@ class ShapeArrays
  public:
     auto& add_shape_array(const std::size_t n)
        {
-        m_shapes.push_back(generate_shape_array(n));
+        m_shapes.push_back(generate_overlapped_circles(n));
         return m_shapes.back();
        }
 
@@ -43,7 +43,6 @@ int main()
 {
     const std::size_t n = 10; // How many shapes per row
     ShapeArrays all_shapes;
-
 
     // Let's have some fun with colors
 
@@ -92,7 +91,6 @@ int main()
         shape.setFillColor(col);
         col.greener(delta_rgb); // <== Here the magic
        }
-
 
 
     // Draw shapes
